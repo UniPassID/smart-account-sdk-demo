@@ -1,0 +1,28 @@
+
+.google-button {
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #666;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+  background-image: url('../../assets/img/google.svg');
+  margin-right: 10px;
+}
+
+.google-button:active {
+  opacity: 0.8;
+}
+
+.google-button:hover {
+  opacity: 0.8;
+}
