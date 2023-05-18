@@ -24,8 +24,6 @@ function GoogleButton() {
       })
         .then(response => response.json());
 
-      console.log('res: ', res)
-
       const signer = new MpcSigner({
         storage: LocalMpcStorage,
       });
@@ -35,7 +33,7 @@ function GoogleButton() {
       
       // If initalized by id token.
       await signer.init({
-        idToken: res.idToken,
+        idToken: res.id_token,
         noStorage: true,
         runningEnv: MpcRunningEnv.Dev,
         appId: '7941978fed0b552181cc8e6ca5faec03',
