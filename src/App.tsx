@@ -1,8 +1,14 @@
-import GoogleButton from "./components/GoogleButton";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { useState } from "react";
+import { Signer } from "ethers";
+import { Web3AuthSigner } from "@unipasswallet/smart-account-signer";
+import InitSigner from "./components/InitSigner";
+import GenerateAccount from "./components/GenerateAccount";
 import "./App.css";
 
 function App() {
+  const [signer, setSigner] = useState<Web3AuthSigner | Signer | undefined>();
+
   return (
     <GoogleOAuthProvider clientId="463402777513-skhs1og4clv62qr04dk64icgms5keql6.apps.googleusercontent.com">
       <div className="App">
@@ -10,7 +16,8 @@ function App() {
           href="https://github.com/UniPassID/unipass-popup-sdk"
           target="_blank"
           className="github-corner"
-          aria-label="View source on GitHub" rel="noreferrer"
+          aria-label="View source on GitHub"
+          rel="noreferrer"
         >
           <svg
             width="120"
@@ -42,13 +49,12 @@ function App() {
         </a>
         <h1 className="title"> UniPass Smart Account Demo </h1>
         <div className="content">
-          {/* Init Signer First */}
           <section className="step-1">
-
+            <InitSigner onCreateSigner={setSigner} />
           </section>
-          {/* generate UniPass Account */}
-          <section className="step-2"></section>
-          <GoogleButton />
+          <section className="step-2">
+            { signer && <GenerateAccount signer={signer} /> }
+          </section>
         </div>
       </div>
     </GoogleOAuthProvider>
