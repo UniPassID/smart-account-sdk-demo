@@ -40,8 +40,14 @@ function App() {
             ></path>
           </svg>
         </a>
-        <h1 className="title"> UniPass JS-API Demo </h1>
-        <div>
+        <h1 className="title"> UniPass Smart Account Demo </h1>
+        <div className="content">
+          {/* Init Signer First */}
+          <section className="step-1">
+
+          </section>
+          {/* generate UniPass Account */}
+          <section className="step-2"></section>
           <GoogleButton />
         </div>
       </div>
