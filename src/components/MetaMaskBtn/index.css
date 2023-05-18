@@ -1,5 +1,5 @@
-
-.google-button {
+.metamask-btn {
+  display: flex;
   background-color: #fff;
   display: flex;
   flex-direction: row;
@@ -10,19 +10,21 @@
   border-radius: 5px;
   cursor: pointer;
   user-select: none;
+  border: 1px solid #666;
 }
 
-.google-icon {
+.metamask-icon {
   width: 20px;
   height: 20px;
-  background-image: url('../../assets/img/google.svg');
+  background-size: contain;
+  background-image: url('../../assets/img/metamask.png');
   margin-right: 10px;
 }
 
-.google-button:active {
+.metamask-btn:active {
   opacity: 0.8;
 }
 
-.google-button:hover {
+.metamask-btn:hover {
   opacity: 0.8;
 }
