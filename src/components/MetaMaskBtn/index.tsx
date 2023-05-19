@@ -16,7 +16,7 @@ function MetaMaskBtn(props: MetaMaskBtnProps) {
 
   return (
     <div className="metamask-btn" onClick={initSigner}>
-      <div className="metamask-icon"/> Get Signer </div>
+      <div className="metamask-icon"/> Connect MetaMask </div>
   );
 }
 

@@ -2,8 +2,8 @@ import { GoogleLogin } from "@react-oauth/google";
 import ReactLoading from "react-loading";
 import {
   Web3AuthSigner,
-  UnipassRunningEnv,
 } from "@unipasswallet/smart-account-signer";
+import { Environment } from "@unipasswallet/smart-account";
 import "./index.css";
 import MetaMaskBtn from "../MetaMaskBtn";
 import { useState } from "react";
@@ -14,12 +14,18 @@ function InitSigner(props: any) {
   const [success, setSuccess] = useState<boolean>(false);
   const initWeb3Signer = async function (idToken: string) {
     setLoading(true)
+    const startTime = Date.now()
+    console.log('Begin to init Web3Signer ', startTime)
     const web3AuthSigner = new Web3AuthSigner({
       appId: "d891d3062f3f5252be137b4a0553ca83",
       idToken,
-      runningEnv: UnipassRunningEnv.Dev,
+      env: Environment.Dev,
     });
     const signer = await web3AuthSigner.init();
+
+    const endTime = Date.now()
+    console.log('Finish ', endTime)
+    console.log(`Duration:  ${endTime - startTime}ms`)
     props.onCreateSigner(signer);
 
     setLoading(false)
@@ -50,7 +56,7 @@ function InitSigner(props: any) {
             ) : (
               <>
                 <ul>
-                  <li> Create Web3Auth Signer by GoogleOauth. </li>
+                  <li> Create Web3Auth Signer by GoogleOAuth. </li>
                 </ul>
                 <div className="btn-wrapper">
                   <GoogleLogin
@@ -63,7 +69,7 @@ function InitSigner(props: any) {
                   />
                 </div>
                 <ul>
-                  <li> Create MetaMask Signer </li>
+                  <li> Get MetaMask Signer </li>
                 </ul>
                 <div className="btn-wrapper">
                   <MetaMaskBtn
