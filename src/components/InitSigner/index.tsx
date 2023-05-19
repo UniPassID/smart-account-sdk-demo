@@ -1,7 +1,7 @@
 import { GoogleLogin } from "@react-oauth/google";
 import ReactLoading from "react-loading";
 import {
-  Web3AuthSigner,
+  UniPassJwtSigner,
 } from "@unipasswallet/smart-account-signer";
 import { Environment } from "@unipasswallet/smart-account";
 import "./index.css";
@@ -12,16 +12,17 @@ import { Signer } from "ethers";
 function InitSigner(props: any) {
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
-  const initWeb3Signer = async function (idToken: string) {
+  const initUniPassJwtSigner = async function (idToken: string) {
     setLoading(true)
     const startTime = Date.now()
     console.log('Begin to init Web3Signer ', startTime)
-    const web3AuthSigner = new Web3AuthSigner({
+    const uniPassJwtSigner = new UniPassJwtSigner({
+      // !Attention: The appId should be replaced with the appId assigned to you.
       appId: "d891d3062f3f5252be137b4a0553ca83",
       idToken,
       env: Environment.Dev,
     });
-    const signer = await web3AuthSigner.init();
+    const signer = await uniPassJwtSigner.init();
 
     const endTime = Date.now()
     console.log('Finish ', endTime)
@@ -56,12 +57,12 @@ function InitSigner(props: any) {
             ) : (
               <>
                 <ul>
-                  <li> Create Web3Auth Signer by GoogleOAuth. </li>
+                  <li> Get UniPassJwt Signer by Web3Auth through Google OAuth. </li>
                 </ul>
                 <div className="btn-wrapper">
                   <GoogleLogin
                     onSuccess={(credentialResponse) => {
-                      initWeb3Signer(credentialResponse.credential!);
+                      initUniPassJwtSigner(credentialResponse.credential!);
                     }}
                     onError={() => {
                       console.log("Login Failed");

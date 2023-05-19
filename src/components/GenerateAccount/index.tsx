@@ -9,9 +9,11 @@ function GenerateAccount (props: any) {
   const generateAccount = async function () {
     setLoading(true)
     const smartAccount = new SmartAccount({
+      // !Attention: The rpcUrl should be replaced with your RPC node address.
       rpcUrl: "https://node.wallet.unipass.id/eth-mainnet",
       masterKeySigner: props.signer!,
       env: Environment.Dev,
+      // !Attention: The appId should be replaced with the appId assigned to you.
       appId: "d891d3062f3f5252be137b4a0553ca83",
     });
 

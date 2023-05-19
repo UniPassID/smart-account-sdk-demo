@@ -15,6 +15,8 @@
     "@types/node": "^16.18.31",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
+    "@unipasswallet/smart-account": "0.1.0-alpha.2",
+    "@unipasswallet/smart-account-signer": "0.1.0-alpha.2",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.8",
