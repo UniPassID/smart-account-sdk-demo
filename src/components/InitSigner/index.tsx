@@ -20,7 +20,7 @@ function InitSigner(props: any) {
       // !Attention: The appId should be replaced with the appId assigned to you.
       appId: "d891d3062f3f5252be137b4a0553ca83",
       idToken,
-      env: Environment.Dev,
+      env: Environment.Testnet,
     });
     const signer = await uniPassJwtSigner.init();
 
