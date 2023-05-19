@@ -13,7 +13,7 @@ function App() {
     <GoogleOAuthProvider clientId="463402777513-skhs1og4clv62qr04dk64icgms5keql6.apps.googleusercontent.com">
       <div className="App">
         <a
-          href="https://github.com/UniPassID/unipass-popup-sdk"
+          href="https://github.com/UniPassID/smart-account-sdk-demo"
           target="_blank"
           className="github-corner"
           aria-label="View source on GitHub"
