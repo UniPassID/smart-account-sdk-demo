@@ -1,13 +1,13 @@
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useState } from "react";
 import { Signer } from "ethers";
-import { Web3AuthSigner } from "@unipasswallet/smart-account-signer";
+import { UniPassJwtSigner } from "@unipasswallet/smart-account-signer";
 import InitSigner from "./components/InitSigner";
 import GenerateAccount from "./components/GenerateAccount";
 import "./App.css";
 
 function App() {
-  const [signer, setSigner] = useState<Web3AuthSigner | Signer | undefined>();
+  const [signer, setSigner] = useState<UniPassJwtSigner | Signer | undefined>();
 
   return (
     <GoogleOAuthProvider clientId="463402777513-skhs1og4clv62qr04dk64icgms5keql6.apps.googleusercontent.com">
