@@ -41,25 +41,44 @@
   text-align: left;
 }
 
-.retry {
-  background-color: #fff;
-  text-align: center;
+.btn-wrapper {
+  padding-left: 40px;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  color: #666;
-  font-size: 16px;
+}
+
+.up-btn {
+  background-color: #8864ff;
+  color: #fff;
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
   user-select: none;
-  border: 1px solid #666;
+  margin: 10px 0;
+  text-align: center;
 }
 
-.metamask-btn:active {
+i {
+  background-color: #eee;
+}
+
+.up-btn:active {
   opacity: 0.8;
 }
 
-.metamask-btn:hover {
+.up-btn:hover {
   opacity: 0.8;
+}
+
+.title {
+  margin-top: 40px;
+  font-size: 18px;
+}
+
+.section-content {
+  margin: 10px 0;
+}
+
+.bottom {
+  max-width: 600px;
+  margin: 40px auto 0;
 }
