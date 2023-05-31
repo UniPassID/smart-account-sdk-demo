@@ -3,7 +3,7 @@ import ReactLoading from "react-loading";
 import {
   UniPassJwtSigner,
 } from "@unipasswallet/smart-account-signer";
-import { Environment } from "@unipasswallet/smart-account";
+import { Environment } from "@unipasswallet/smart-account-utils";
 import "./index.css";
 import MetaMaskBtn from "../MetaMaskBtn";
 import { useState } from "react";
@@ -20,7 +20,7 @@ function InitSigner(props: any) {
       // !Attention: The appId should be replaced with the appId assigned to you.
       appId: "d891d3062f3f5252be137b4a0553ca83",
       idToken,
-      env: Environment.Testnet,
+      env: Environment.Test,
     });
     const signer = await uniPassJwtSigner.init();
 
