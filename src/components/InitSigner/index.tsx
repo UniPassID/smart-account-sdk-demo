@@ -4,7 +4,6 @@ import {
   UniPassJwtSigner,
 } from "@unipasswallet/smart-account-signer";
 import { Environment } from "@unipasswallet/smart-account-utils";
-import "./index.css";
 import MetaMaskBtn from "../MetaMaskBtn";
 import { useState } from "react";
 import { Signer } from "ethers";
