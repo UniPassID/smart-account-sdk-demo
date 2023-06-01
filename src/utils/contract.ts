@@ -15,28 +15,8 @@ const NFTContract = new Contract(
 );
 const usdcContract = new Contract(USDCAddress, usdcAbi, provider);
 
-interface TokenData {
-  symbol: string;
-}
-
-interface ITokenMap {
-  [key: string]: TokenData;
-}
-
-const TokenMap: ITokenMap = {
-  "0x0000000000000000000000000000000000000000": {
-    symbol: "BNB",
-  },
-  "0x64544969ed7ebf5f083679233325356ebe738930": {
-    symbol: "USDC",
-  },
-  "0x337610d27c682e347c9cd60bd4b3b107c9d34ddd": {
-    symbol: "USDT",
-  },
-};
-
 export interface FormattedFeeOption extends FeeOption {
-  symbol: string;
+  // symbol: string;
   value: string;
 }
 
@@ -45,7 +25,7 @@ export function mintNFTFunctionData(address: string) {
 }
 
 export function transferFunctionData(address: string) {
-  const amountToSend = utils.parseUnits("0.1", 6);
+  const amountToSend = utils.parseUnits("0.001", 6);
   return usdcContract.interface.encodeFunctionData("transfer", [
     utils.getAddress(address),
     amountToSend,
@@ -60,7 +40,6 @@ export async function getBalance(address: string): Promise<string> {
 export function tokenFormatter(feeOption: FeeOption): FormattedFeeOption {
   return {
     ...feeOption,
-    symbol: TokenMap[feeOption.token].symbol,
     value: utils.formatEther(feeOption.amount),
   };
 }

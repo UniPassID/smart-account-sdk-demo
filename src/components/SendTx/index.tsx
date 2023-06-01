@@ -7,7 +7,7 @@ import {
   tokenFormatter,
   transferFunctionData,
 } from "../../utils/contract";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ReactLoading from "react-loading";
 
 interface SendTxProps {
@@ -21,28 +21,33 @@ function SendTx(props: SendTxProps) {
   const [txLoading, setTxLoading] = useState<boolean>(false);
   const [balance, setBalance] = useState<string>("");
   const [feeOptions, setFeeOptions] = useState<FormattedFeeOption[]>([]);
+  const [error, setError] = useState<unknown>("");
 
   const simulateTx = async () => {
-    setFeeOptions([]);
-    setTransactionHash("");
-    setLoading(true);
-    const address = await account.getAddress();
-    const data = transferFunctionData(address);
-    const tx = {
-      value: BigNumber.from(0),
-      to: address,
-      data,
-    };
-    const { availableFeeOptions = [], unavailableFeeOptions = [] } =
-      await account.simulateTransaction(tx);
+    try {
+      setFeeOptions([]);
+      setTransactionHash("");
+      setLoading(true);
+      setError(null);
+      const address = await account.getAddress();
+      const data = transferFunctionData(address);
+      const tx = {
+        value: BigNumber.from(0),
+        to: address,
+        data,
+      };
+      const { availableFeeOptions = [], unavailableFeeOptions = [] } =
+        await account.simulateTransaction(tx);
 
-    console.log("availableFeeOptions: ", availableFeeOptions);
-    console.log("unavailableFeeOptions: ", unavailableFeeOptions);
+      const formattedToken = [
+        ...availableFeeOptions,
+        ...unavailableFeeOptions,
+      ].map((option) => tokenFormatter(option));
 
-    const formattedToken = [...availableFeeOptions, ...unavailableFeeOptions].map(option => tokenFormatter(option))
-
-    setFeeOptions(formattedToken);
-
+      setFeeOptions(formattedToken);
+    } catch (e) {
+      setError(e);
+    }
     setLoading(false);
   };
 
@@ -57,34 +62,28 @@ function SendTx(props: SendTxProps) {
     };
 
     const usdcFeeOption = feeOptions.find((feeOption) => {
-      console.log(
-        "feeOption.token: ",
-        feeOption.token,
-        USDCAddress,
-        feeOption.token.toLowerCase() === USDCAddress
-      );
       return feeOption.token.toLowerCase() === USDCAddress.toLowerCase();
     });
 
-    console.log("usdcFeeOption: ", usdcFeeOption);
-
-    if (usdcFeeOption) {
-      const response = await account.sendTransaction(tx, {
-        fee: usdcFeeOption,
-      });
-      console.log("response: ", response);
-      const receipt = await response.wait(30);
-      console.log("receipt: ", receipt);
-      setTransactionHash(receipt.transactionHash);
-      setTxLoading(false);
+    try {
+      if (usdcFeeOption) {
+        const response = await account.sendTransaction(tx, {
+          fee: usdcFeeOption,
+        });
+        const receipt = await response.wait(30);
+        setTransactionHash(receipt.transactionHash);
+      }
+    } catch (e) {
+      setError(e || "Something wrong");
     }
+    setTxLoading(false);
   };
 
-  const fetchBalance = async () => {
+  const fetchBalance = useCallback(async () => {
     const address = await account.getAddress();
     const balance = await getBalance(address);
     setBalance(balance);
-  };
+  }, [account]);
 
   useEffect(() => {
     const int = setInterval(() => {
@@ -93,7 +92,7 @@ function SendTx(props: SendTxProps) {
     return () => {
       clearInterval(int);
     };
-  }, []);
+  }, [fetchBalance]);
 
   return (
     <>
@@ -118,7 +117,7 @@ function SendTx(props: SendTxProps) {
       </div>
       <div>
         First, we need to generate a transaction and estimate the gas fee
-        required. We will construct a transaction to transfer 0.1 USDC to
+        required. We will construct a transaction to transfer 0.001 USDC to
         another address.
       </div>
       {loading ? (
@@ -132,7 +131,12 @@ function SendTx(props: SendTxProps) {
         <>
           <div>The gas fee options required for this transaction:</div>
           <div className="section-content">
-            { feeOptions.map(option => <div>{option.symbol}: {option.error? 'Unavailable' : option.value}</div>)}
+            {feeOptions.map((option) => (
+              <div key={option.name}>
+                {option.symbol}: {option.value}{" "}
+                {option.error && "(Unavailable)"}
+              </div>
+            ))}
           </div>
           <div>
             Second, let's send the transaction and choose to pay the gas fee
@@ -162,6 +166,7 @@ function SendTx(props: SendTxProps) {
           )}
         </>
       )}
+      {error && <div className="error-msg">{error.toString()}</div>}
     </>
   );
 }

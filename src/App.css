@@ -70,8 +70,13 @@ i {
 }
 
 .title {
-  margin-top: 40px;
-  font-size: 18px;
+  margin-top: 30px;
+}
+
+.feat-section {
+  border-radius: 10px;
+  background-color: #f4f4f4;
+  padding: 10px;
 }
 
 .section-content {
@@ -81,4 +86,8 @@ i {
 .bottom {
   max-width: 600px;
   margin: 40px auto 0;
+}
+
+.error-msg {
+  color: red
 }
