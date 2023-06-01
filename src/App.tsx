@@ -10,7 +10,7 @@ function App() {
   const [signer, setSigner] = useState<UniPassJwtSigner | Signer | undefined>();
 
   return (
-    <GoogleOAuthProvider clientId="463402777513-skhs1og4clv62qr04dk64icgms5keql6.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="1076249686642-g0d42524fhdirjeho0t6n3cjd7pulmns.apps.googleusercontent.com">
       <div className="App">
         <a
           href="https://github.com/UniPassID/smart-account-sdk-demo"

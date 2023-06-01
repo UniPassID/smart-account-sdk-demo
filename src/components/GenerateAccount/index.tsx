@@ -12,9 +12,9 @@ function GenerateAccount (props: any) {
       // !Attention: The rpcUrl should be replaced with your RPC node address.
       rpcUrl: "https://node.wallet.unipass.id/eth-mainnet",
       masterKeySigner: props.signer!,
-      env: Environment.Testnet,
+      env: Environment.Production,
       // !Attention: The appId should be replaced with the appId assigned to you.
-      appId: "d891d3062f3f5252be137b4a0553ca83",
+      appId: "ce3feaa41d725a018f75b165a8ee528d",
     });
 
     const account = await smartAccount.init();
