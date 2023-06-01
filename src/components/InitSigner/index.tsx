@@ -18,9 +18,9 @@ function InitSigner(props: any) {
     console.log('Begin to init Web3Signer ', startTime)
     const uniPassJwtSigner = new UniPassJwtSigner({
       // !Attention: The appId should be replaced with the appId assigned to you.
-      appId: "d891d3062f3f5252be137b4a0553ca83",
+      appId: "ce3feaa41d725a018f75b165a8ee528d",
       idToken,
-      env: Environment.Testnet,
+      env: Environment.Production,
     });
     const signer = await uniPassJwtSigner.init();
 
