@@ -11,7 +11,7 @@ import { SmartAccount } from "@unipasswallet/smart-account";
 import SendTx from "./components/SendTx";
 
 const GoogleClientId =
-  "REDACTED_GOOGLE_CLIENT_ID";
+"REDACTED_GOOGLE_CLIENT_ID";
 
 function App() {
   const [signer, setSigner] = useState<UniPassJwtSigner | Signer | undefined>();
@@ -39,10 +39,10 @@ function App() {
               <h4 className="title">
                 Congratulations! We have successfully got UniPass Account
               </h4>
-              <section>
+              <section className="feat-section" style={{marginBottom: '20px'}}>
                 <MintNFT account={account} />
               </section>
-              <section>
+              <section className="feat-section">
                 <SendTx account={account} />
               </section>
             </>
