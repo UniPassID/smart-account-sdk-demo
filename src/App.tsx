@@ -9,16 +9,24 @@ import MintNFT from "./components/MintNFT";
 import "./App.css";
 import { SmartAccount } from "@unipasswallet/smart-account";
 import SendTx from "./components/SendTx";
+import { ChainConfig } from "./utils/contract";
 
 const GoogleClientId =
-"463402777513-skhs1og4clv62qr04dk64icgms5keql6.apps.googleusercontent.com";
+  "1076249686642-g0d42524fhdirjeho0t6n3cjd7pulmns.apps.googleusercontent.com";
 
 function App() {
   const [signer, setSigner] = useState<UniPassJwtSigner | Signer | undefined>();
   const [account, setAccount] = useState<SmartAccount | undefined>();
+  const [activeChain, setActiveChain] = useState<number>(97);
 
   const reset = () => {
     window.location.reload();
+  };
+
+  const handleSwitchChain = async (event: any) => {
+    const chainId = parseInt(event.target.value);
+    await account?.switchChain(chainId);
+    setActiveChain(chainId);
   };
 
   return (
@@ -39,9 +47,22 @@ function App() {
               <h4 className="title">
                 Congratulations! We have successfully got UniPass Account
               </h4>
-              <section className="feat-section" style={{marginBottom: '20px'}}>
-                <MintNFT account={account} />
-              </section>
+              <div className="active-chain">
+                Active Chain:
+                <select onChange={handleSwitchChain}>
+                  {ChainConfig.map((chain) => (
+                    <option value={chain.chainId}>{chain.name}</option>
+                  ))}
+                </select>
+              </div>
+              {activeChain === 97 && (
+                <section
+                  className="feat-section"
+                  style={{ marginBottom: "20px" }}
+                >
+                  <MintNFT account={account} />
+                </section>
+              )}
               <section className="feat-section">
                 <SendTx account={account} />
               </section>
