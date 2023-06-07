@@ -91,3 +91,13 @@ i {
 .error-msg {
   color: red
 }
+
+.active-chain {
+  margin: 10px 0;
+}
+
+.active-chain select {
+  margin-left: 10px;
+  font-size: 16px;
+  padding: 5px;
+}

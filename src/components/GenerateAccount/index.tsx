@@ -1,8 +1,8 @@
 import { SmartAccount } from "@unipasswallet/smart-account";
-import { Environment } from "@unipasswallet/smart-account-utils";
 import { Signer } from "ethers";
 import { useState } from "react";
 import ReactLoading from "react-loading";
+import { ChainConfig } from "../../utils/contract";
 
 interface GenerateAccountProps {
   signer: Signer;
@@ -16,15 +16,13 @@ function GenerateAccount(props: GenerateAccountProps) {
     setLoading(true);
     const smartAccount = new SmartAccount({
       // !Attention: The rpcUrl should be replaced with your RPC node address.
-      rpcUrl: "https://node.wallet.unipass.id/bsc-testnet",
-      unipassServerUrl: "https://d.wallet.unipass.vip/wallet-v2",
+      chainOptions: ChainConfig,
       masterKeySigner: props.signer!,
-      env: Environment.Test,
       // !Attention: The appId should be replaced with the appId assigned to you.
-      appId: "d891d3062f3f5252be137b4a0553ca83",
+      appId: "ce3feaa41d725a018f75b165a8ee528d",
     });
 
-    const account = await smartAccount.init();
+    const account = await smartAccount.init({ chainId: 97 });
 
     props.onCreateAccount(account);
 
