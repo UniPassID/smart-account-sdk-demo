@@ -64,7 +64,7 @@ function App() {
                 </section>
               )}
               <section className="feat-section">
-                <SendTx account={account} />
+                <SendTx account={account} activeChain={activeChain} />
               </section>
             </>
           )}

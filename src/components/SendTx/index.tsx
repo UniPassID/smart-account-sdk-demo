@@ -2,6 +2,7 @@ import { SmartAccount } from "@unipasswallet/smart-account";
 import { BigNumber, utils } from "ethers";
 import {
   ChainConfig,
+  ChainConfigI,
   FormattedFeeOption,
   getBalance,
   tokenFormatter,
@@ -12,6 +13,7 @@ import ReactLoading from "react-loading";
 
 interface SendTxProps {
   account: SmartAccount;
+  activeChain: number;
 }
 
 function SendTx(props: SendTxProps) {
@@ -21,24 +23,37 @@ function SendTx(props: SendTxProps) {
   const [txLoading, setTxLoading] = useState<boolean>(false);
   const [balance, setBalance] = useState<string>("");
   const [feeOptions, setFeeOptions] = useState<FormattedFeeOption[]>([]);
-  const [error, setError] = useState<unknown>("");
+  const [error, setError] = useState<any>("");
+  const [currentChain, setCurrentChain] = useState<ChainConfigI>();
+
+  const reset = () => {
+    setFeeOptions([]);
+    setTransactionHash("");
+    setError(null);
+  };
 
   const simulateTx = async () => {
+    if (!balance) return
     try {
-      setFeeOptions([]);
-      setTransactionHash("");
+      reset();
       setLoading(true);
-      setError(null);
       const address = await account.getAddress();
-      const currentChain = ChainConfig.find(chain => chain.chainId === account.getChainId())
+      const currentChain = ChainConfig.find(
+        (chain) => chain.chainId === account.getChainId()
+      );
+
+      const usdcBalance = utils.parseUnits(balance, currentChain!.decimal || 6);
+      const amountToSend = utils.parseUnits("0.01", currentChain!.decimal || 6);
+      if (usdcBalance.lt(amountToSend)) {
+        throw new Error("Your USDC balance is not enough.");
+      }
       const data = transferFunctionData(address, currentChain!);
       const tx = {
         value: BigNumber.from(0),
         to: utils.getAddress(currentChain!.usdcContractAddress),
         data,
       };
-      const { feeOptions = []} =
-        await account.simulateTransaction(tx);
+      const { feeOptions = [] } = await account.simulateTransaction(tx);
 
       const formattedToken = feeOptions.map((option) => tokenFormatter(option));
 
@@ -52,7 +67,10 @@ function SendTx(props: SendTxProps) {
   const sendTx = async () => {
     setTxLoading(true);
     const address = await account.getAddress();
-    const currentChain = ChainConfig.find(chain => chain.chainId === account.getChainId())
+    const currentChain = ChainConfig.find(
+      (chain) => chain.chainId === account.getChainId()
+    );
+    setCurrentChain(currentChain);
     const data = transferFunctionData(address, currentChain!);
     const tx = {
       value: BigNumber.from(0),
@@ -61,7 +79,10 @@ function SendTx(props: SendTxProps) {
     };
 
     const usdcFeeOption = feeOptions.find((feeOption) => {
-      return feeOption.token.toLowerCase() === currentChain!.usdcContractAddress.toLowerCase();
+      return (
+        feeOption.token.toLowerCase() ===
+        currentChain!.usdcContractAddress.toLowerCase()
+      );
     });
 
     try {
@@ -78,23 +99,24 @@ function SendTx(props: SendTxProps) {
     setTxLoading(false);
   };
 
-  const fetchBalance = useCallback(async () => {
-    const address = await account.getAddress();
-    const currentChain = ChainConfig.find(chain => chain.chainId === account.getChainId())
-    if (currentChain) {
-      const balance = await getBalance(address, currentChain!);
-      setBalance(balance);
-    }
-  }, [account]);
+  const fetchBalance = useCallback(
+    async (chainId: number) => {
+      const address = await account.getAddress();
+      const chain = ChainConfig.find((chain) => chain.chainId === chainId);
+      if (chain) {
+        const balance = await getBalance(address, chain);
+        setBalance(balance);
+      }
+      setTimeout(fetchBalance, 3000)
+    },
+    [account]
+  );
 
   useEffect(() => {
-    const int = setInterval(() => {
-      fetchBalance();
-    }, 3000);
-    return () => {
-      clearInterval(int);
-    };
-  }, [fetchBalance]);
+    reset();
+    setBalance("");
+    fetchBalance(props.activeChain)
+  }, [props.activeChain, fetchBalance]);
 
   return (
     <>
@@ -104,13 +126,23 @@ function SendTx(props: SendTxProps) {
       <div>
         Let's experience how to send a transaction when user only have USDC.
       </div>
-      <div className="section-content">
+      <div className="section-content" style={{ display: "flex" }}>
         {" "}
-        Your USDC Balance: <b>{balance}</b>
+        Your USDC Balance:{" "}
+        {balance ? (
+          <b>{balance}</b>
+        ) : (
+          <ReactLoading
+            width="20px"
+            height="20px"
+            type="bars"
+            color="#8864ff"
+          />
+        )}
       </div>
       <div>
         First, we need to generate a transaction and estimate the gas fee
-        required. We will construct a transaction to transfer 0.001 USDC to
+        required. We will construct a transaction to transfer 0.01 USDC to
         another address.
       </div>
       {loading ? (
@@ -150,7 +182,7 @@ function SendTx(props: SendTxProps) {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href={`https://testnet.bscscan.com/tx/${transactionHash}`}
+                href={`${currentChain?.explorer}/tx/${transactionHash}`}
               >
                 transaction
               </a>{" "}
@@ -159,7 +191,7 @@ function SendTx(props: SendTxProps) {
           )}
         </>
       )}
-      {error && <div className="error-msg">{error.toString()}</div>}
+      {error && <div className="error-msg">{error.message}</div>}
     </>
   );
 }
