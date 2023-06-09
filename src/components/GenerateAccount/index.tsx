@@ -1,30 +1,35 @@
-import "./index.css";
-import { SmartAccount, Environment } from "@unipasswallet/smart-account";
+import { SmartAccount } from "@unipasswallet/smart-account";
+import { Signer } from "ethers";
 import { useState } from "react";
 import ReactLoading from "react-loading";
+import { ChainConfig } from "../../utils/contract";
 
-function GenerateAccount (props: any) {
+interface GenerateAccountProps {
+  signer: Signer;
+  onCreateAccount: (account: SmartAccount) => void;
+}
+
+function GenerateAccount(props: GenerateAccountProps) {
   const [address, setAddress] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const generateAccount = async function () {
-    setLoading(true)
+    setLoading(true);
     const smartAccount = new SmartAccount({
       // !Attention: The rpcUrl should be replaced with your RPC node address.
-      rpcUrl: "https://node.wallet.unipass.id/eth-mainnet",
+      chainOptions: ChainConfig,
       masterKeySigner: props.signer!,
-      env: Environment.Production,
       // !Attention: The appId should be replaced with the appId assigned to you.
       appId: "ce3feaa41d725a018f75b165a8ee528d",
     });
 
-    const account = await smartAccount.init();
-    const address = await account.getAddress();
-    setLoading(false)
-    setAddress(address);
-  };
+    const account = await smartAccount.init({ chainId: 97 });
 
-  const reset = () => {
-    window.location.reload()
+    props.onCreateAccount(account);
+
+    const address = await account.getAddress();
+
+    setLoading(false);
+    setAddress(address);
   };
 
   return (
@@ -36,22 +41,17 @@ function GenerateAccount (props: any) {
         <>
           {address ? (
             <>
-            <div>UniPass address: {address}</div>
-            <div className="retry-btn" onClick={reset}>
-              Retry
-            </div>
+              <div>UniPass address: {address}</div>
             </>
           ) : (
-            <div className="btn-wrapper">
-              <div className="metamask-btn" onClick={generateAccount}>
-                Generate Account
-              </div>
+            <div className="up-btn" onClick={generateAccount}>
+              Generate Account
             </div>
           )}
         </>
       )}
     </>
   );
-};
+}
 
 export default GenerateAccount;
