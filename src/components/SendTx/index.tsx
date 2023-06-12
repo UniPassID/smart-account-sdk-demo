@@ -8,7 +8,7 @@ import {
   tokenFormatter,
   transferFunctionData,
 } from "../../utils/contract";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ReactLoading from "react-loading";
 
 interface SendTxProps {
@@ -25,6 +25,7 @@ function SendTx(props: SendTxProps) {
   const [feeOptions, setFeeOptions] = useState<FormattedFeeOption[]>([]);
   const [error, setError] = useState<any>("");
   const [currentChain, setCurrentChain] = useState<ChainConfigI>();
+  let activeChain = useRef<number>()
 
   const reset = () => {
     setFeeOptions([]);
@@ -38,10 +39,6 @@ function SendTx(props: SendTxProps) {
       reset();
       setLoading(true);
       const address = await account.getAddress();
-      const currentChain = ChainConfig.find(
-        (chain) => chain.chainId === account.getChainId()
-      );
-
       const usdcBalance = utils.parseUnits(balance, currentChain!.decimal || 6);
       const amountToSend = utils.parseUnits("0.01", currentChain!.decimal || 6);
       if (usdcBalance.lt(amountToSend)) {
@@ -99,23 +96,26 @@ function SendTx(props: SendTxProps) {
     setTxLoading(false);
   };
 
-  const fetchBalance = useCallback(
-    async (chainId: number) => {
-      const address = await account.getAddress();
-      const chain = ChainConfig.find((chain) => chain.chainId === chainId);
-      if (chain) {
-        const balance = await getBalance(address, chain);
-        setBalance(balance);
-      }
-      setTimeout(fetchBalance, 3000)
-    },
-    [account]
-  );
+  const fetchBalance = useCallback(async (chainId: number) => {
+    const address = await account.getAddress();
+    const chain = ChainConfig.find((chain) => chain.chainId === chainId);
+    if (chain) {
+      const balance = await getBalance(address, chain);
+      activeChain.current === chainId && setBalance(balance)
+    }
+  }, [account])
 
   useEffect(() => {
     reset();
     setBalance("");
-    fetchBalance(props.activeChain)
+    activeChain.current = props.activeChain
+    setCurrentChain(ChainConfig.find(
+      (chain) => chain.chainId === props.activeChain
+    ));
+    const interval = setInterval(() => {
+      fetchBalance(props.activeChain)
+    }, 3000)
+    return () => clearTimeout(interval)
   }, [props.activeChain, fetchBalance]);
 
   return (
