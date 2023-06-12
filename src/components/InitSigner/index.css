@@ -1,4 +1,4 @@
-.metamask-btn {
+.signer-btn {
   display: flex;
   background-color: #fff;
   display: flex;
@@ -13,18 +13,29 @@
   border: 1px solid #666;
 }
 
-.metamask-icon {
+.signer-icon {
   width: 20px;
   height: 20px;
   background-size: contain;
-  background-image: url('../../assets/img/metamask.png');
   margin-right: 10px;
 }
 
-.metamask-btn:active {
+.signer-icon:active {
   opacity: 0.8;
 }
 
-.metamask-btn:hover {
+.signer-icon:hover {
   opacity: 0.8;
+}
+
+.jwt-icon {
+  background-image: url('../../assets/img/jwt.svg');
+}
+
+.metamask-icon {
+  background-image: url('../../assets/img/metamask.png');
+}
+
+.web3auth-icon {
+  background-image: url('../../assets/img/web3auth.svg');
 }

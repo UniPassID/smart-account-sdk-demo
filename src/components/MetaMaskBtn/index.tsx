@@ -1,4 +1,3 @@
-import "./index.css";
 import { Signer, providers } from 'ethers';
 
 interface MetaMaskBtnProps {
@@ -15,8 +14,8 @@ function MetaMaskBtn(props: MetaMaskBtnProps) {
   };
 
   return (
-    <div className="metamask-btn" onClick={initSigner}>
-      <div className="metamask-icon"/> Connect MetaMask </div>
+    <div className="signer-btn" onClick={initSigner}>
+      <div className="signer-icon metamask-icon"/> Connect MetaMask </div>
   );
 }
 

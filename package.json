@@ -15,9 +15,11 @@
     "@types/node": "^16.18.31",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
-    "@unipasswallet/smart-account": "^0.1.0-alpha.13",
-    "@unipasswallet/smart-account-signer": "^0.1.0-alpha.13",
-    "@unipasswallet/smart-account-utils": "0.1.0-alpha.13",
+    "@unipasswallet/smart-account": "^0.1.0-alpha.15",
+    "@unipasswallet/smart-account-signer": "^0.1.0-alpha.15",
+    "@unipasswallet/smart-account-utils": "0.1.0-alpha.15",
+    "@walletconnect/client": "^1.8.0",
+    "@web3auth/modal": "5.2.1",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.8",
@@ -153,5 +155,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
