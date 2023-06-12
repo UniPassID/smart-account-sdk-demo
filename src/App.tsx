@@ -19,9 +19,14 @@ function App() {
   const [account, setAccount] = useState<SmartAccount | undefined>();
   const [activeChain, setActiveChain] = useState<number>(97);
 
-  const reset = () => {
+  const reset = async () => {
     window.location.reload();
   };
+
+  const logout = async () => {
+    await account?.destroy()
+    reset()
+  }
 
   const handleSwitchChain = async (event: any) => {
     const chainId = parseInt(event.target.value);
@@ -51,7 +56,7 @@ function App() {
                 Active Chain:
                 <select onChange={handleSwitchChain}>
                   {ChainConfig.map((chain) => (
-                    <option value={chain.chainId}>{chain.name}</option>
+                    <option value={chain.chainId} key={chain.chainId}>{chain.name}</option>
                   ))}
                 </select>
               </div>
@@ -72,6 +77,11 @@ function App() {
         <div className="bottom">
           <div className="up-btn" onClick={reset}>
             Retry
+          </div>
+        </div>
+        <div className="bottom">
+          <div className="up-btn" onClick={logout}>
+            Logout
           </div>
         </div>
       </div>
