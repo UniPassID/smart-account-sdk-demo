@@ -3261,15 +3261,15 @@
     ethers "^5.7.1"
     fetch-ponyfill "^7.1.0"
 
-"@unipasswallet/smart-account-signer@^0.1.0-alpha.15":
-  version "0.1.0-alpha.15"
-  resolved "https://registry.yarnpkg.com/@unipasswallet/smart-account-signer/-/smart-account-signer-0.1.0-alpha.15.tgz#0802bd65dc925b3d383af93cbf84862215ef3a51"
-  integrity sha512-kBui9F0D3cm73P6KWteHYbV79k/efreSIcI4yNZAgkqoJMfV2onSPh0+JU+sFdLeZfP0OB4ygRROLDTZl8rkSQ==
+"@unipasswallet/smart-account-signer@^0.1.0-alpha.23":
+  version "0.1.0-alpha.23"
+  resolved "https://registry.yarnpkg.com/@unipasswallet/smart-account-signer/-/smart-account-signer-0.1.0-alpha.23.tgz#39ad63d6ac260af520f600d54ac0299875926b74"
+  integrity sha512-YmsaECqybsyeJ8E0T/DvLH1ImWOoArQgoz0KhBzwkEMj7cRRB9yE/wjsqSVUL5oWowEBcXKYBDGQSSvt+NeAtA==
   dependencies:
     "@ethersproject/abstract-provider" "^5.7.0"
     "@ethersproject/properties" "^5.7.0"
     "@unipasswallet/keys" "^0.3.2"
-    "@unipasswallet/smart-account-utils" "^0.1.0-alpha.15"
+    "@unipasswallet/smart-account-utils" "^0.1.0-alpha.23"
     "@unipasswallet/utils" "^0.3.2"
     "@web3auth/base" "^5.2.0"
     "@web3auth/single-factor-auth" "^5.1.1"
@@ -3278,18 +3278,18 @@
     ethers "^5.7.1"
     tss-wasm "0.6.0"
 
-"@unipasswallet/smart-account-utils@0.1.0-alpha.15", "@unipasswallet/smart-account-utils@^0.1.0-alpha.15":
-  version "0.1.0-alpha.15"
-  resolved "https://registry.yarnpkg.com/@unipasswallet/smart-account-utils/-/smart-account-utils-0.1.0-alpha.15.tgz#ff065a6efc2cb1d584e4a1f0426d2efa74b63240"
-  integrity sha512-9v5Rgvbfol/2/3ik2pHritxmQHlpvyxFCw2eBHGnjk1FN4m9myVNi0O19arpVTwI4hjm0Hi6kR7/Q4IVcwAJJg==
+"@unipasswallet/smart-account-utils@^0.1.0-alpha.23":
+  version "0.1.0-alpha.23"
+  resolved "https://registry.yarnpkg.com/@unipasswallet/smart-account-utils/-/smart-account-utils-0.1.0-alpha.23.tgz#0799127b50de88e4b49bacc7ae11fa3679151fa9"
+  integrity sha512-uwrr3VvFmwzyiDw7KRCMTXKqODQzhD6nC5iPmVMPLxAjXamgHzHeynVy2FuddcaBFuvVgERKJYTVuci5tyFwRg==
   dependencies:
     ethers "^5.7.1"
     ts-custom-error "^3.3.1"
 
-"@unipasswallet/smart-account@^0.1.0-alpha.15":
-  version "0.1.0-alpha.15"
-  resolved "https://registry.yarnpkg.com/@unipasswallet/smart-account/-/smart-account-0.1.0-alpha.15.tgz#7e5ec982045a318e6a34cdb3f48d217ebb840bc1"
-  integrity sha512-9mh4tQQgBb5JIGc3q7rd+Zw+4eqBsX+GZEfJRP9LEuX771YuklNqfBjp5RRXAAMt4lJ06eXSA3EPDxUCCzUoIQ==
+"@unipasswallet/smart-account@^0.1.0-alpha.23":
+  version "0.1.0-alpha.23"
+  resolved "https://registry.yarnpkg.com/@unipasswallet/smart-account/-/smart-account-0.1.0-alpha.23.tgz#85f7fd2686adf1383480f7dbe07aa2fa602a6b12"
+  integrity sha512-SJQTJOSimrSRBXLq+vWCWFt7fhpC+lPAyAojEcW6W4xxO+iIPexoJrdbQjrAmVkcjdjojTJTFGB92z2IirTyiA==
   dependencies:
     "@ethersproject/abstract-provider" "^5.7.0"
     "@ethersproject/properties" "^5.7.0"
@@ -3297,8 +3297,7 @@
     "@unipasswallet/keys" "^0.3.2"
     "@unipasswallet/network" "^0.3.2"
     "@unipasswallet/relayer" "^0.3.2"
-    "@unipasswallet/smart-account-signer" "^0.1.0-alpha.15"
-    "@unipasswallet/smart-account-utils" "^0.1.0-alpha.15"
+    "@unipasswallet/smart-account-utils" "^0.1.0-alpha.23"
     "@unipasswallet/transaction-builders" "^0.3.2"
     "@unipasswallet/transactions" "^0.3.2"
     "@unipasswallet/utils" "^0.3.2"
