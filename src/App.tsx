@@ -11,8 +11,7 @@ import { SmartAccount } from "@unipasswallet/smart-account";
 import SendTx from "./components/SendTx";
 import { ChainConfig } from "./utils/contract";
 
-const GoogleClientId =
-  "REDACTED_GOOGLE_CLIENT_ID";
+const GoogleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
 
 function App() {
   const [signer, setSigner] = useState<UniPassJwtSigner | Signer | undefined>();
@@ -33,6 +32,14 @@ function App() {
     await account?.switchChain(chainId);
     setActiveChain(chainId);
   };
+
+  if (!GoogleClientId) {
+    return (
+      <p role="alert">
+        Set REACT_APP_GOOGLE_CLIENT_ID in .env.local and restart the app.
+      </p>
+    );
+  }
 
   return (
     <GoogleOAuthProvider clientId={GoogleClientId}>

@@ -2,6 +2,18 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Local Configuration
+
+Set `REACT_APP_GOOGLE_CLIENT_ID` and `REACT_APP_WEB3AUTH_CLIENT_ID` in
+`.env.local`, using `.env.example` for the variable names. Restart the dev
+server after changing them. Local `.env` files are ignored by Git.
+
+These client IDs are public browser configuration. Never put an OAuth client
+secret in frontend code or any `REACT_APP_*` variable: those values are included
+in the browser bundle. Authorization-code exchanges requiring a client secret
+must run on a backend. Revoke or rotate any previously exposed client secret;
+rewriting local Git history does not revoke it or remove copies on a remote.
+
 ## Available Scripts
 
 In the project directory, you can run:

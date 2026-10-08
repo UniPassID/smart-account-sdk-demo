@@ -1,7 +1,7 @@
 import { Signer, providers } from 'ethers';
 import { Web3Auth } from "@web3auth/modal";
 
-const Web3AuthClientId = "REDACTED_WEB3AUTH_CLIENT_ID"
+const Web3AuthClientId = process.env.REACT_APP_WEB3AUTH_CLIENT_ID || ""
 
 interface Web3AuthBtnProps {
   onCreateSigner: (signer: Signer) => void
@@ -25,6 +25,14 @@ function Web3AuthBtn(props: Web3AuthBtnProps) {
       props.onCreateSigner(signer)
     }
   };
+
+  if (!Web3AuthClientId) {
+    return (
+      <p role="status">
+        Set REACT_APP_WEB3AUTH_CLIENT_ID in .env.local to enable Web3Auth.
+      </p>
+    );
+  }
 
   return (
     <div className="signer-btn" onClick={initSigner}>
